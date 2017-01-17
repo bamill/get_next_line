@@ -6,7 +6,7 @@
 /*   By: bmiller <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 17:02:28 by bmiller           #+#    #+#             */
-/*   Updated: 2017/01/16 20:46:14 by bmiller          ###   ########.fr       */
+/*   Updated: 2017/01/16 19:37:32 by bmiller          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,48 +23,53 @@ static memdup(void *m1, void *m2, size_t n)
   // to be implemented
 }
 */
-static t_list	*rest_fd(const int fd, t_list **list)
+static t_list	*rest_fd(const int fd, t_list *list)
 {
 	t_list	*lst;
 
-	if (!(*list))
+	if (!list)
 	{
 		lst = ft_lstnew("", fd);
-		ft_lstadd(list, lst);
-		lst = *list;
+		ft_lstadd(&list, lst);
+		lst = list;
 		return (lst);
 	}
-	lst = *list;
+	lst = list;
 	if ((int)lst->content_size == fd)
 		return (lst);
-	return (rest_fd(fd, &(lst->next)));
+	return (rest_fd(fd, lst->next));
 }
 
 int				get_next_line(const int fd, char **line)
 {
 	char				buff[BUFF_SIZE + 1];
-	char				*next;
 	int					bytes_read;
+	char				*next;
 	static t_list		*list;
 	t_list				*lst;
 
-	if (!line || fd < 0)
+	if ((!line || fd < 0 || read(fd, buff, 0) < 0 || \
+	     !(*line = ft_strnew(1))))
 		return (-1);
-	lst = rest_fd(fd, &list);
+	lst = rest_fd(fd, list);
 	while ((bytes_read = read(fd, buff, BUFF_SIZE)))
 	{
-		if (bytes_read == -1)
+		buff[bytes_read] = 0;
+		if (!(lst->content = ft_strjoin(lst->content, buff)))
 			return (-1);
-		buff[BUFF_SIZE] = 0;
-		lst->content = ft_strjoin(lst->content, buff);
-		next = ft_memchr(lst->content, '\n', ft_strlen(lst->content));
-		if (next != NULL)
+		if ((next = (char*)ft_memchr(buff, '\n', BUFF_SIZE)))
 			break;
+		else
+			next = NULL;
 	}
-	ft_memcpy(*line, lst->content, next - (char*)(lst->content));
-	(lst->content) += (next - (char*)(lst->content));
-	ft_strclr(lst->content);
-	if (bytes_read == 0)
+	if ((lst->content == NULL) && (bytes_read < BUFF_SIZE))
 		return (0);
+	if (next != NULL)
+		ft_memccpy(*line, lst->content, '\n', next - buff - 1);
+	else
+		ft_memccpy(*line, lst->content, '\n', 5000);
+//	if (next && sizeof(next) < (int)sizeof(lst->content) && lst->content != NULL)
+//		lst->content += sizeof(next);
+//	ft_memdel(&(list->content));
 	return (1);
 }
