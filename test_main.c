@@ -6,7 +6,7 @@
 /*   By: bmiller <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 16:48:17 by bmiller           #+#    #+#             */
-/*   Updated: 2017/01/16 18:56:56 by bmiller          ###   ########.fr       */
+/*   Updated: 2017/01/18 16:39:00 by bmiller          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,7 @@ int		main(int argc, char **argv)
 		return (-1);
 	if (!(*line = (char*)malloc(128)))
 		return (-1);
-	get_next_line(fd, line);
-	printf("%s\n", *line);
-	get_next_line(fd, line);
-	printf("%s\n", *line);
-	get_next_line(fd, line);
-	printf("%s\n", *line);
-	get_next_line(fd, line);
-	printf("%s\n", *line);
-	get_next_line(fd, line);
-	printf("%s\n", *line);
+	while (get_next_line(fd, line) > 0)
+		printf("%s\n", *line);
 	return (0);
 }
