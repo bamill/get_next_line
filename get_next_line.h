@@ -6,13 +6,13 @@
 /*   By: bmiller <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 22:40:51 by bmiller           #+#    #+#             */
-/*   Updated: 2017/01/14 20:55:33 by bmiller          ###   ########.fr       */
+/*   Updated: 2017/01/19 14:32:11 by bmiller          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GETNEXTLINE_H
 # define GETNEXTLINE_H
-# define BUFF_SIZE 32
+# define BUFF_SIZE 3
 # include <stdlib.h>
 # include "./libft/includes/libft.h"
 

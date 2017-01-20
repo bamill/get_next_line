@@ -6,7 +6,7 @@
 /*   By: bmiller <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 17:02:28 by bmiller           #+#    #+#             */
-/*   Updated: 2017/01/19 00:46:13 by bmiller          ###   ########.fr       */
+/*   Updated: 2017/01/19 15:59:25 by bmiller          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int				get_next_line(const int fd, char **line)
 		if (*s == '\n')
 			s++;
 		nl = ft_strchr(s, '\n');
-		tmp = nl ? ft_strsub(s, 0, nl - s) : s;
+		tmp = nl ? ft_strsub(s, 0, nl - s + 1) : s;
 		*line = ft_strjoin(*line, tmp);
-		nl ? s += (nl - s) : ft_strclr(s);
+		nl ? s += (nl - s) : ft_strdel(&s);
 	}
 	while ((bytes_read = read(fd, buff, BUFF_SIZE)))
 	{
@@ -40,7 +40,7 @@ int				get_next_line(const int fd, char **line)
 		nl = ft_strchr(buff, '\n');
 		if (nl)
 		{
-			tmp = ft_strsub(buff, 0, nl - buff);
+			tmp = ft_strsub(buff, 0, nl - buff + 1);
 			*line = ft_strjoin(*line, tmp);
 			ft_strclr(tmp);
 			if (ft_strlen(nl) > 1)
@@ -49,5 +49,6 @@ int				get_next_line(const int fd, char **line)
 		}
 		*line = ft_strjoin(*line, buff);
 	}
+	*line = ft_strjoin(*line, buff);
 	return (0);
 }

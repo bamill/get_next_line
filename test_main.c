@@ -6,7 +6,7 @@
 /*   By: bmiller <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 16:48:17 by bmiller           #+#    #+#             */
-/*   Updated: 2017/01/19 00:06:59 by bmiller          ###   ########.fr       */
+/*   Updated: 2017/01/19 14:02:29 by bmiller          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int		main(int argc, char **argv)
 		return (-1);
 	while (get_next_line(fd, line) > 0)
 		printf("%s\n", *line);
+	close(fd);
 	return (0);
 }
