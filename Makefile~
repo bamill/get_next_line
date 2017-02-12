@@ -1,0 +1,25 @@
+NAME = gnl
+SRC = get_next_line.c test_main.c
+OBJ = $(SRC:.c=.o)
+LIBF = -Llibft -lft
+LIB = ./libft
+CFLAGS = -Wall -Werror -Wextra -g
+
+all: $(NAME)
+
+$(NAME): $(LIBFT)
+	gcc -c $(CFLAGS) $(LIBF)
+	gcc $(OBJ) -o $(NAME)
+
+$(LIBFT):
+	@make -C $(LIB)
+
+clean:
+	@make -C $(LIB) clean
+	rm -rf $(OBJ)
+
+fclean: clean
+	@make -C $(LIB) fclean
+	rm -f $(NAME)
+
+re: fclean all
