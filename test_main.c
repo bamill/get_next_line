@@ -35,7 +35,7 @@ int		main(int argc, char **argv)
 			//			bzero(nl,32);
 		}
 	close(fd);
-	free(line);
-	line = NULL;
+	//	free(line);
+	//	line = NULL;
 	return (0);
 }
