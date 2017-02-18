@@ -21,10 +21,8 @@ int		main(int argc, char **argv)
 {
 	int		fd;
 	char	**line;
-	char	nl[254];
 
 	line = (char**)(malloc(sizeof(char*)));
-	*line = nl;
 	if (argc < 2)
 		printf("usage: %s: file\n", argv[0]);
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
@@ -32,10 +30,11 @@ int		main(int argc, char **argv)
 	while (get_next_line(fd, line) > 0)
 		{
 			printf("%s\n", *line);
-			//			bzero(nl,32);
+			ft_strdel(line);
 		}
 	close(fd);
-	//	free(line);
-	//	line = NULL;
+	ft_strdel(line);
+	free(line);
+	line = NULL;
 	return (0);
 }
